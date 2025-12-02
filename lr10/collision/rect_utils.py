@@ -63,3 +63,26 @@ def intersectionAreaRect(rect1, rect2):
 
     # Иначе — пересечения нет
     return 0
+
+def intersectionAreaMultiRect(rectangles):
+    # Проверка корректности всех прямоугольников
+    for i, rect in enumerate(rectangles):
+        if not isCorrectRect(rect):
+            raise RectCorrectError(f"{i+1}-й прямоугольник некорректный")
+
+    # Начинаем с координат первого прямоугольника
+    (x1, y1), (x2, y2) = rectangles[0]
+
+    # Последовательно пересекаем с остальными
+    for (a1, b1), (a2, b2) in rectangles[1:]:
+        x1 = max(x1, a1)
+        y1 = max(y1, b1)
+        x2 = min(x2, a2)
+        y2 = min(y2, b2)
+
+        # Если пересечения нет — сразу возвращаем 0
+        if x1 >= x2 or y1 >= y2:
+            return 0
+
+    # Вычисляем площадь пересечения
+    return (x2 - x1) * (y2 - y1)
