@@ -41,3 +41,25 @@ def isCollisionRect(rect1, rect2): #Аргументы:
         return False
 
     return True
+
+def intersectionAreaRect(rect1, rect2):
+    # Проверка корректности входных данных
+    if not isCorrectRect(rect1):
+        raise ValueError("Первый прямоугольник некорректен")
+    if not isCorrectRect(rect2):
+        raise ValueError("Второй прямоугольник некорректен")
+
+    # Распаковка координат
+    (x1, y1), (x2, y2) = rect1
+    (a1, b1), (a2, b2) = rect2
+
+    # Вычисление ширины и высоты пересечения
+    dx = min(x2, a2) - max(x1, a1)
+    dy = min(y2, b2) - max(y1, b1)
+
+    # Если пересечение есть — возвращаем площадь
+    if dx > 0 and dy > 0:
+        return dx * dy
+
+    # Иначе — пересечения нет
+    return 0
